@@ -18,12 +18,8 @@ class AllResultsCsvReporter {
     let result4csv = ['"id","module","name","file","status","duration"\n']
     const suites = results.testResults
     for (const suite of suites) {
-      console.log("Suite:");
-      console.log(suite);
       for (const testCase of suite.testResults) {
-        console.log("Test Case:");
-        console.log(testCase);
-        result4csv.push(`"${suite.displayName}::${testCase.title}","${suite.displayName}","${testCase.title}","${suite.testFilePath}","${testCase.status}","${testCase.duration}"\n`)
+        result4csv.push(`"${testCase.fullName}","${testCase.ancestorTitles.join('')}","${testCase.title}","${suite.testFilePath}","${testCase.status}","${testCase.duration}"\n`)
       }
     }
     fs.writeFile(`${this._options.outputDir}/${this._options.outputFile}`, result4csv.join(''), err => {
